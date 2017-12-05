@@ -1,0 +1,23 @@
+{
+  "name": "hash_generator",
+  "version": "0.0.1",
+  "description": "A password hash generator",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "colors": "^1.1.2"
+  },
+  "devDependencies": {
+    "mocha": "^3.1.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "password",
+    "hash",
+    "generator"
+  ],
+  "author": "Gavin Schilling",
+  "license": "AGPL-3.0"
+}

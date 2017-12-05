@@ -1,0 +1,16 @@
+/*
+* todos json
+*
+* Copyright (c) 2016 Gavin Schilling Marketing
+* Licensed under the GNU Affero General Public License
+* 
+*/
+
+[
+    {"name": "clean the house"}, 
+    {"name": "water the dog"}, 
+    {"name": "feed the lawn"},
+    {"name": "pay dem bills"},
+    {"name": "run"}, 
+    {"name": "swim"}
+  ]

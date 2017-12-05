@@ -1,0 +1,23 @@
+{
+  "name": "todos",
+  "version": "1.0.0",
+  "description": "To Do List",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/schillgc/Code-Louisville/tree/master/Treehouse/Full%20Stack%20JavaScript/MEAN%20Stack/Angular%20JS/To%20Do%20List.git"
+  },
+  "keywords": [
+    "To",
+    "Do",
+    "List"
+  ],
+  "author": "Gavin Schilling",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "angular": "^1.5.8"
+  }
+}
