@@ -6,15 +6,15 @@
 * 
 */
 
-var calculator = {
+const calculator = {
 		sum: 0,
-		add: function(value) {
+		add(value) {
       this.sum += value;
     },
-    clear: function() {
+    clear() {
       this.sum = 0;
     }, 
-    equals: function() {
+    equals() {
       return this.sum;
     }
-}
+};
