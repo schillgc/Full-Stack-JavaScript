@@ -1,36 +1,33 @@
-'use strict';
+import express from 'express';
+import posts from './mock/posts.json';
 
-var express = require('express'),
-	  posts = require('./mock/posts.json');
+const postsLists = Object.keys(posts).map(value => posts[value]);
 
-var postsLists = Object.keys(posts).map(function(value) {
-							         return posts[value]})
+const app = express();
 
-var app = express();
-
-app.use('/static', express.static(__dirname + '/public'))
+app.use('/static', express.static(`${__dirname}/public`))
 
 app.set('view engine', 'pug');
-app.set('views', __dirname + '/templates');
+app.set('views', `${__dirname}/templates`);
 
-app.get('/', function(req, res){
-	var path = req.path;
+app.get('/', (req, res) => {
+	const path = req.path;
 	res.locals.path = path;
 	res.render('index');
 });
 
-app.get('/blog/:title?', function(req, res){ 
-	var title = req.params.title;
+app.get('/blog/:title?', (req, res) => { 
+	const title = req.params.title;
 	if (title === undefined) {
 		res.status(503);
 		res.render('blog', {posts: postsLists})
 	} else {
-		var post = posts[title] || {};
-		res.render('post', { post: post});
+		const post = posts[title] || {};
+		res.render('post', { post});
 	}
 });
 
-app.get('/posts', function(req, res) {
+app.get('/posts', (req, res) => {
 	if (req.query.raw) {
 		res.json(posts);
 	} else {
@@ -38,6 +35,6 @@ app.get('/posts', function(req, res) {
 	}
 })
 
-app.listen(3000, function() {
+app.listen(3000, () => {
 	console.log("The frontend server is running on port 3000!");
 });
