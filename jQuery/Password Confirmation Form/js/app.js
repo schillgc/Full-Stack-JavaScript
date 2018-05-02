@@ -1,79 +1,73 @@
 /*
-* main css
+* app js
 *
 * Copyright (c) 2016 Gavin Schilling Marketing
 * Licensed under the GNU Affero General Public License
 * 
 */
 
-//Problem: Hints are shown when form is valid
-//Solution: Hide and show them at appropriate times
-var $password = $("#password");
-var $confirmPassword = $("#confirm_password");
-var $username = $("#username");
-//Hide hints
-$("form span").hide();
+//Problem: No user interaction causes no change to application
+//Solution: When user interacts cause changes appropriately
+let color = $(".selected").css("background-color");
+const $canvas = $("canvas");
+const context = $canvas[0].getContext("2d");
+let lastEvent;
+let mouseDown = false;
 
-function isUsernamePresent() {
-  return $username.val().length > 0;
+//When clicking on control list items
+$(".controls").on("click", "li", function() {
+  //Deselect sibling elements
+  $(this).siblings().removeClass("selected");
+  //Select clicked element
+  $(this).addClass("selected"); 
+  //Cashe current color
+  color = $(this).css("background-color");
+});
+
+//When "New Color" is pressed
+$("#revealColorSelect").click(() => {
+  //Show color select or hide the color selected
+  changeColor();
+  $("#colorSelect").toggle();
+});
+
+//Update the new color span
+function changeColor() {
+  const r = $("#red").val();
+  const g = $("#green").val();
+  const b = $("#blue").val();
+  $("#newColor").css("background-color", `rgb(${r}, ${g}, ${b})`);
 }
 
-function isPasswordValid() {
-  return $password.val().length > 8;
-}
+//When color sliders change
+$("input[type=range]").change(changeColor);
+  
+//When "Add Color" is pressed
+$("#addNewColor").click(() => {
+  //Append the color to the controls ul;
+  const $newColor = $("<li></li>");
+  $newColor.css("background-color", $("#newColor").css("background-color"));
+  $(".controls ul").append($newColor);
+  //Select new color
+  $newColor.click();
+});
 
-function arePasswordsMatching() {
-  return $password.val() === $confirmPassword.val();
-}
-
-function canSubmit() {
-  return isPasswordValid() && arePasswordsMatching() && isUsernamePresent();
-}
-
-function passwordEvent() {
-  //Find out if password is valid
-  if(isPasswordValid()) {
-    //Hide hints if valid
-    $password.next().hide();
-    //Else show hint
-  } else {
-    $password.next().show();
+//On mouse events on the canvas
+$canvas.mousedown(e => {
+  lastEvent = e;
+  mouseDown = true;
+}).mousemove(e => {
+  //Draw lines
+  if(mouseDown) {
+    context.beginPath();
+    context.moveTo(lastEvent.offsetX, lastEvent.offsetY);
+    context.lineTo(e.offsetX, e.offsetY);
+    context.strokeStyle = color;
+    context.stroke();
+    lastEvent = e;
   }
-}
-
-function confirmPasswordEvent() {
-  //Find out if password and confirmation match
-  if(arePasswordsMatching()) {
-    //Hide hint if match
-    $confirmPassword.next().hide();
-    //Else show hint
-  } else {
-    $confirmPassword.next().show();
-  }
-}
-
-function enableSubmitEvent() {
-  $("#submit").prop("disabled", !canSubmit());
-  if ( $password.val().length > 8 ) {
-    document.getElementById("submit").disabled = true;
-    enableSubmitEvent();
-  } else {
-    document.getElementById("submit").disabled = false;
-}
-
-function usernameEvent() {
-  if(isUsernamePresent()) {
-    $username.next().hide();
-  } else {
-    $username.next().show();
-  }
-}
-//Disables Submit Button
-document.getElementById("submit").disabled = true;
-//When event happens on password input
-$password.focus(passwordEvent).keyup(passwordEvent).keyup(confirmPasswordEvent).keyup(enableSubmitEvent);
-//When event happens on confirmation input
-$confirmPassword.focus(confirmPasswordEvent).keyup(confirmPasswordEvent).keyup(enableSubmitEvent);
-$username.focus(usernameEvent).keyup(usernameEvent).keyup(enableSubmitEvent);
-
-enableSubmitEvent();
+}).mouseup(() => {
+  mouseDown = false;
+}).mouseleave(() => {
+  $canvas.mouseup();
+});
