@@ -7,13 +7,13 @@
 */
 
 function printNumber(number) {
-  var placeholder = document.getElementById("placeholder");
+  const placeholder = document.getElementById("placeholder");
   placeholder.innerHTML = number;
 }
 
-var button = document.getElementById("button");
+const button = document.getElementById("button");
 
-button.onclick = function() {
-  var result = dice.roll();
+button.onclick = () => {
+  const result = dice.roll();
   printNumber(result);
 };
