@@ -6,14 +6,16 @@
 * 
 */
 
-function diceToRoll(sides) {
-  this.sides = sides;
+class diceToRoll {
+  constructor(sides) {
+    this.sides = sides;
+  }
+
+  roll() {
+      const randomNumber = Math.floor(Math.random() * this.sides) + 1;
+      return randomNumber;
+  }
 }
 
-diceToRoll.prototype.roll = function () {
-    var randomNumber = Math.floor(Math.random() * this.sides) + 1;
-    return randomNumber;
-}
-
-var numberofSides = window.prompt("Enter number of sides on dice");
-var dice = new diceToRoll(numberofSides);
+const numberofSides = window.prompt("Enter number of sides on dice");
+const dice = new diceToRoll(numberofSides);
