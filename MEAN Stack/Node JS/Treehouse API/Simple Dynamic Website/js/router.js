@@ -1,18 +1,8 @@
-/*
-* router js
-*
-* Copyright (c) 2016 Gavin Schilling Marketing
-* Licensed under the GNU Affero General Public License
-* 
-*/
+import Profile from "./profile.js";
+import renderer from "./renderer.js";
+import querystring from "querystring";
 
-'use strict';
-
-var Profile = require("./profile.js");
-var renderer = require("./renderer.js");
-var querystring = require("querystring");
-
-var commonHeaders = {'Content-Type': 'text/html'};
+const commonHeaders = {'Content-Type': 'text/html'};
 
 // Handle HTTP route GET / and POST / i.e. Home
 function home(request, response) {
@@ -21,7 +11,7 @@ function home(request, response) {
     if (request.method.toLowerCase() === "get") {
       // show search
       response.writeHead(200, commonHeaders);
-      response.write(new Date() + "\n");
+      response.write(`${new Date()}\n`);
       renderer.view("header", {}, response);
       renderer.view("search", {}, response);
       renderer.view("footer", {}, response);
@@ -30,11 +20,11 @@ function home(request, response) {
       // if url == "/" && POST
 
       // get the post data from body
-      request.on("data", function(postBody){
+      request.on("data", postBody => {
         // extract the username
-        var query = querystring.parse(postBody.toString());
+        const query = querystring.parse(postBody.toString());
         // redirect to /:username
-        response.writeHead(303, {"Location": "/" + query.username});
+        response.writeHead(303, {"Location": `/${query.username}`});
         response.end();
       });
     }
@@ -45,25 +35,25 @@ function home(request, response) {
 // Handle HTTP route GET /:username i.e. /gavinschilling
 function user(request, response) {
   // if url == "/...."
-  var username = request.url.replace("/", "");
+  const username = request.url.replace("/", "");
   if (username.length > 0) {
       response.writeHead(200, commonHeaders);
-      response.write(new Date() + "\n");
+      response.write(`${new Date()}\n`);
       renderer.view("header", {}, response);
 
       // get JSON from Treehouse
-      var studentProfile = new Profile(username);
+      const studentProfile = new Profile(username);
       // on "end"
-      studentProfile.on("end", function(profileJSON){
+      studentProfile.on("end", profileJSON => {
         // show profile
 
         // Store the values which we need
-        var values = {
+        const values = {
           avatarUrl: profileJSON.gravatar_url,
           username: profileJSON.profile_name,
           badges: profileJSON.badges.length,
           javaScriptPoints: profileJSON.points.JavaScript
-        }
+        };
         // Simple response
         renderer.view("profile", values, response);
         renderer.view("footer", {}, response);
@@ -71,7 +61,7 @@ function user(request, response) {
       });
 
       // on "error"
-      studentProfile.on("error", function(error){
+      studentProfile.on("error", error => {
         // show error
         renderer.view("error", {errorMessage: error.message}, response);
         renderer.view("search", {}, response);
@@ -81,5 +71,5 @@ function user(request, response) {
   }
 }
 
-module.exports.home = home;
-module.exports.user = user;
+export {home};
+export {user};
