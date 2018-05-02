@@ -8,11 +8,11 @@
 
 //Problem: No user interaction causes no change to application
 //Solution: When user interacts cause changes appropriately
-var color = $(".selected").css("background-color");
-var $canvas = $("canvas");
-var context = $canvas[0].getContext("2d");
-var lastEvent;
-var mouseDown = false;
+let color = $(".selected").css("background-color");
+const $canvas = $("canvas");
+const context = $canvas[0].getContext("2d");
+let lastEvent;
+let mouseDown = false;
 
 //When clicking on control list items
 $(".controls").on("click", "li", function() {
@@ -25,7 +25,7 @@ $(".controls").on("click", "li", function() {
 });
 
 //When "New Color" is pressed
-$("#revealColorSelect").click(function() {
+$("#revealColorSelect").click(() => {
   //Show color select or hide the color selected
   changeColor();
   $("#colorSelect").toggle();
@@ -33,19 +33,19 @@ $("#revealColorSelect").click(function() {
 
 //Update the new color span
 function changeColor() {
-  var r = $("#red").val();
-  var g = $("#green").val();
-  var b = $("#blue").val();
-  $("#newColor").css("background-color", "rgb(" + r + ", " + g + ", " + b + ")");
+  const r = $("#red").val();
+  const g = $("#green").val();
+  const b = $("#blue").val();
+  $("#newColor").css("background-color", `rgb(${r}, ${g}, ${b})`);
 }
 
 //When color sliders change
 $("input[type=range]").change(changeColor);
   
 //When "Add Color" is pressed
-$("#addNewColor").click(function(){
+$("#addNewColor").click(() => {
   //Append the color to the controls ul;
-  var $newColor = $("<li></li>");
+  const $newColor = $("<li></li>");
   $newColor.css("background-color", $("#newColor").css("background-color"));
   $(".controls ul").append($newColor);
   //Select new color
@@ -53,10 +53,10 @@ $("#addNewColor").click(function(){
 });
 
 //On mouse events on the canvas
-$canvas.mousedown(function(e) {
+$canvas.mousedown(e => {
   lastEvent = e;
   mouseDown = true;
-}).mousemove(function(e) {
+}).mousemove(e => {
   //Draw lines
   if(mouseDown) {
     context.beginPath();
@@ -66,8 +66,8 @@ $canvas.mousedown(function(e) {
     context.stroke();
     lastEvent = e;
   }
-}).mouseup(function(){
+}).mouseup(() => {
   mouseDown = false;
-}).mouseleave(function(){
+}).mouseleave(() => {
   $canvas.mouseup();
 });
