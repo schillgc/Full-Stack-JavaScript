@@ -1,17 +1,7 @@
-/*
-* profile js
-*
-* Copyright (c) 2016 Gavin Schilling Marketing
-* Licensed under the GNU Affero General Public License
-* 
-*/
-
-'use strict';
-
-var EventEmitter = require("events").EventEmitter;
-var https = require("https");
-var http = require("http");
-var util = require("util");
+import {EventEmitter} from "events";
+import https from "https";
+import http from "http";
+import util from "util";
 
 /**
  * An EventEmitter to get a Treehouse students profile.
@@ -22,35 +12,35 @@ function Profile(username) {
 
     EventEmitter.call(this);
 
-    var profileEmitter = this;
+    const profileEmitter = this;
 
     //Connect to the API URL (https://teamtreehouse.com/username.json)
-    var request = https.get("https://teamtreehouse.com/" + username + ".json", function(response) {
-        var body = "";
+    const request = https.get(`https://teamtreehouse.com/${username}.json`, response => {
+        let body = "";
 
         if (response.statusCode !== 200) {
             request.abort();
             //Status Code Error
-            profileEmitter.emit("error", new Error("There was an error getting the profile for " + username + ". (" + http.STATUS_CODES[response.statusCode] + ")"));
+            profileEmitter.emit("error", new Error(`There was an error getting the profile for ${username}. (${http.STATUS_CODES[response.statusCode]})`));
         }
 
         //Read the data
-        response.on('data', function (chunk) {
+        response.on('data', chunk => {
             body += chunk;
             profileEmitter.emit("data", chunk);
         });
 
-        response.on('end', function () {
+        response.on('end', () => {
             if(response.statusCode === 200) {
                 try {
                     //Parse the data
-                    var profile = JSON.parse(body);
+                    const profile = JSON.parse(body);
                     profileEmitter.emit("end", profile);
                 } catch (error) {
                     profileEmitter.emit("error", error);
                 }
             }
-        }).on("error", function(error){
+        }).on("error", error => {
             profileEmitter.emit("error", error);
         });
     });
@@ -58,4 +48,4 @@ function Profile(username) {
 
 util.inherits( Profile, EventEmitter );
 
-module.exports = Profile;
+export default Profile;
