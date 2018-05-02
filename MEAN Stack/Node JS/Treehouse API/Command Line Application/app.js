@@ -6,6 +6,7 @@
 * 
 */
 
-var profile = require("./profile");
-var users = process.argv.slice(2);
+import profile from "./profile";
+
+const users = process.argv.slice(2);
 users.forEach(profile.get);
