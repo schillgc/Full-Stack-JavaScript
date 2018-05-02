@@ -6,8 +6,8 @@
 * 
 */
 
-var QuizUI = {
-  displayNext: function() {
+const QuizUI = {
+  displayNext() {
     if (quiz.hasEnded()) {
       this.displayScore();
     } else {
@@ -17,40 +17,39 @@ var QuizUI = {
     }
   },
   
-  displayQuestion: function() {
+  displayQuestion() {
     this.populateIdWithHTML("question", quiz.getCurrentQuestion().text);
   },
                             
-  displayChoices: function() {
-    var choices = quiz.getCurrentQuestion().choices;
+  displayChoices() {
+    const choices = quiz.getCurrentQuestion().choices;
 
-    for(var i = 0; i < choices.length; i++) {
-      this.populateIdWithHTML("choice" + i, choices[i]);
-      this.guessHandler("guess" + i, choices[i]);
+    for(let i = 0; i < choices.length; i++) {
+      this.populateIdWithHTML(`choice${i}`, choices[i]);
+      this.guessHandler(`guess${i}`, choices[i]);
     }
   },
     
-  displayScore: function() {
-    var gameOverHTML = "<h1>Complete</h1>";
-    gameOverHTML += "<h2> Your score is: " + quiz.score +
-"</h2>";
+  displayScore() {
+    let gameOverHTML = "<h1>Complete</h1>";
+    gameOverHTML += `<h2> Your score is: ${quiz.score}</h2>`;
     this.populateIdWithHTML("quiz", gameOverHTML);
   },
     
-  populateIdWithHTML: function(id, text) {
-    var element = document.getElementById(id);
+  populateIdWithHTML(id, text) {
+    const element = document.getElementById(id);
     element.innerHTML = text;
   },
-  guessHandler: function(id, guess) {
-    var button = document.getElementById(id);
-    button.onclick = function() {
+  guessHandler(id, guess) {
+    const button = document.getElementById(id);
+    button.onclick = () => {
       quiz.guess(guess);
       QuizUI.displayNext();
     }
   },
 
-  displayProgress: function() {
-    var currentQuestionNumber = quiz.currentQuestionIndex + 1;
-    this.populateIdWithHTML("progress", "Question " + currentQuestionNumber + " of " + quiz.questions.length);
+  displayProgress() {
+    const currentQuestionNumber = quiz.currentQuestionIndex + 1;
+    this.populateIdWithHTML("progress", `Question ${currentQuestionNumber} of ${quiz.questions.length}`);
   }
 };
