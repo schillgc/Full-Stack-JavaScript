@@ -6,32 +6,32 @@
 * 
 */
 
-var playlist = new Playlist();
+const playlist = new Playlist();
 
-var hereComesTheSun = new Song("Here Comes the Sun", "The Beatles", "2:54");
-var walkingOnSunshine = new Song("Walking on Sunshine", "Katrina and the Waves", "3:43");
+const hereComesTheSun = new Song("Here Comes the Sun", "The Beatles", "2:54");
+const walkingOnSunshine = new Song("Walking on Sunshine", "Katrina and the Waves", "3:43");
 
 playlist.add(hereComesTheSun);
 playlist.add(walkingOnSunshine);
 
-var playlistElement = document.getElementById("playlist");
+const playlistElement = document.getElementById("playlist");
 
 playlist.renderInElement(playlistElement);
 
-var playButton = document.getElementById("play");
-playButton.onclick = function() {
+const playButton = document.getElementById("play");
+playButton.onclick = () => {
   playlist.play();
   playlist.renderInElement(playlistElement);
 }
 
-var nextButton = document.getElementById("next");
-nextButton.onclick = function() {
+const nextButton = document.getElementById("next");
+nextButton.onclick = () => {
   playlist.next();
   playlist.renderInElement(playlistElement);
 }
 
-var stopButton = document.getElementById("stop");
-stopButton.onclick = function() {
+const stopButton = document.getElementById("stop");
+stopButton.onclick = () => {
   playlist.stop();
   playlist.renderInElement(playlistElement);
 }
