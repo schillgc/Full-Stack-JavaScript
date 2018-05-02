@@ -19,11 +19,11 @@ $('.header').sticky({
   responsiveWidth: true
 });
 
-$('.header').on('sticky-start', function () {
+$('.header').on('sticky-start', () => {
   $('.description').html('We build <strong>great</strong> apps');
 });
 
-$('.header').on('sticky-end', function () {
+$('.header').on('sticky-end', () => {
   $('.description').html('We build apps');
 });
 
@@ -35,31 +35,6 @@ $('.work').sticky({
 $('.work').on('sticky-start', function() {
   $(this).append(' <a href="mailto:email@website.com" class="email-text">Email&nbsp;us</a>');
 });
-$('.work').on('sticky-end', function() {
+$('.work').on('sticky-end', () => {
     $('.email-text').remove();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
