@@ -10,14 +10,14 @@
 //Solution: To hide the text links and swap them out with a more appropriate navigation
 
 //Create a select and append to #menu
-var $select = $( "<select></select>" );
+const $select = $( "<select></select>" );
 $( "#menu" ).append( $select );
 
 //Cycle over menu links
 $( "#menu a" ).each( function() {
-  var $anchor = $( this );
+  const $anchor = $( this );
   //Create an option
-  var $option = $("<option></option>");
+  const $option = $("<option></option>");
   
   //Deal with selected options depending on current page
   if($anchor.parent().hasClass( "selected" )) {
@@ -32,7 +32,7 @@ $( "#menu a" ).each( function() {
 });
 
 //Bind change listener to the select
-$select.change( function() {
+$select.change( () => {
   //Go to select's location
   window.location = $select.val();
 });
