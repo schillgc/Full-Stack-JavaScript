@@ -1,7 +1,5 @@
 function gatherNamesOf (arrayOfPeople) {
-  return arrayOfPeople.map(function (person) {
-    return person.name;
-  });
+  return arrayOfPeople.map(person => person.name);
 }
 
-module.exports = gatherNamesOf;
+export default gatherNamesOf;
