@@ -1,14 +1,14 @@
-var webpack = require("webpack"),
-       path = require('path');
+import webpack from "webpack";
+import path from 'path';
 
-module.exports = {
-  content: __dirname + '/app',
+export default {
+  content: `${__dirname}/app`,
   entry: {
     app: './app/app.js',
     vendor: ['angular']
   },
   output: {
-    path: __dirname + '/public/scripts',
+    path: `${__dirname}/public/scripts`,
     filename: 'todo.bundle.js'
   },
   plugins: [
