@@ -69,7 +69,7 @@ class Game extends React.Component {
     this.setState({
       history: history.concat([
         {
-          squares: squares
+          squares
         }
       ]),
       stepNumber: history.length,
@@ -91,7 +91,7 @@ class Game extends React.Component {
 
     const moves = history.map((step, move) => {
       const desc = move ?
-        'Go to move #' + move :
+        `Go to move #${move}` :
         'Go to game start';
       return (
         <li key={move}>
@@ -102,9 +102,9 @@ class Game extends React.Component {
 
     let status;
     if (winner) {
-      status = "Winner: " + winner;
+      status = `Winner: ${winner}`;
     } else {
-      status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+      status = `Next player: ${this.state.xIsNext ? "X" : "O"}`;
     }
 
     return (
@@ -123,8 +123,6 @@ class Game extends React.Component {
     );
   }
 }
-
-// ========================================
 
 ReactDOM.render(<Game />, document.getElementById("root"));
 
