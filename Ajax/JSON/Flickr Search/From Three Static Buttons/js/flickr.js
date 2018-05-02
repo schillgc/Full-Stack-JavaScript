@@ -1,5 +1,3 @@
-"use strict";
-
 /*
 * flickr js
 *
@@ -8,23 +6,23 @@
 * 
 */
 
-$(document).ready(function() {
+$(document).ready(() => {
   $("button").click(function() {
     $("button").removeClass("selected");
     $(this).addClass("selected");
-    var flickrAPI =
+    const flickrAPI =
       "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-    var animal = $(this).text();
-    var flickrOptions = {
+    const animal = $(this).text();
+    const flickrOptions = {
       tags: animal,
       format: "json"
     }; // end flickrOptions
     function displayPhotos(data) {
-      var photoHTML = "<ul>";
-      $.each(data.items, function(i, photo) {
+      let photoHTML = "<ul>";
+      $.each(data.items, (i, photo) => {
         photoHTML += "<li class='grid-25 tablet-grid-50'>";
-        photoHTML += "<a href='" + photo.link + "' class='image'>";
-        photoHTML += "<img src='" + photo.media.m + "'></a></li>";
+        photoHTML += `<a href='${photo.link}' class='image'>`;
+        photoHTML += `<img src='${photo.media.m}'></a></li>`;
       }); // end each function
       photoHTML += "</ul>";
       $("#photos").html(photoHTML);
