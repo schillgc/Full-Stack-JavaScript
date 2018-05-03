@@ -7,14 +7,14 @@
 */
 
 function displayNumber(number) {
-  var placeholder = document.getElementById("placeholder");
+  const placeholder = document.getElementById("placeholder");
   placeholder.innerHTML = number;
 }
 
-var dice = new Dice(6);
-var button = document.getElementById("button");
+const dice = new Dice(6);
+const button = document.getElementById("button");
 
-button.onclick = function() {
-  var result = dice.roll();
+button.onclick = () => {
+  const result = dice.roll();
   displayNumber(result);
 };
