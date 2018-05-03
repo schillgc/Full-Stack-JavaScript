@@ -1,12 +1,10 @@
-'use strict';
+import gulp from 'gulp';
 
-var gulp = require('gulp');
+const $ = require('gulp-load-plugins')();
 
-var $ = require('gulp-load-plugins')();
+import browserSync from 'browser-sync';
 
-var browserSync = require('browser-sync');
-
-module.exports = function(options) {
+export default options => {
   // Downloads the selenium webdriver
   gulp.task('webdriver-update', $.protractor.webdriver_update);
 
@@ -14,15 +12,15 @@ module.exports = function(options) {
 
   function runProtractor (done) {
 
-    gulp.src(options.e2e + '/**/*.js')
+    gulp.src(`${options.e2e}/**/*.js`)
       .pipe($.protractor.protractor({
         configFile: 'protractor.conf.js'
       }))
-      .on('error', function (err) {
+      .on('error', err => {
         // Make sure failed tests cause gulp to exit non-zero
         throw err;
       })
-      .on('end', function () {
+      .on('end', () => {
         // Close browser sync server
         browserSync.exit();
         done();
