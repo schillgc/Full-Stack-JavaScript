@@ -1,28 +1,22 @@
-'use strict';
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
+import browserSyncSpa from 'browser-sync-spa';
+import util from 'util';
+import middleware from './proxy';
 
-var gulp = require('gulp');
-var browserSync = require('browser-sync');
-var browserSyncSpa = require('browser-sync-spa');
+export default options => {
 
-var util = require('util');
-
-var middleware = require('./proxy');
-
-module.exports = function(options) {
-
-  function browserSyncInit(baseDir, browser) {
-    browser = browser === undefined ? 'default' : browser;
-
-    var routes = null;
-    if(baseDir === options.src || (util.isArray(baseDir) && baseDir.indexOf(options.src) !== -1)) {
+  function browserSyncInit(baseDir, browser='default') {
+    let routes = null;
+    if(baseDir === options.src || (util.isArray(baseDir) && baseDir.includes(options.src))) {
       routes = {
         '/bower_components': 'bower_components'
       };
     }
 
-    var server = {
-      baseDir: baseDir,
-      routes: routes
+    const server = {
+      baseDir,
+      routes
     };
 
     if(middleware.length > 0) {
@@ -31,8 +25,8 @@ module.exports = function(options) {
 
     browserSync.instance = browserSync.init({
       startPath: '/',
-      server: server,
-      browser: browser
+      server,
+      browser
     });
   }
 
@@ -40,19 +34,19 @@ module.exports = function(options) {
     selector: '[ng-app]'// Only needed for angular apps
   }));
 
-  gulp.task('serve', ['watch'], function () {
-    browserSyncInit([options.tmp + '/serve', options.src]);
+  gulp.task('serve', ['watch'], () => {
+    browserSyncInit([`${options.tmp}/serve`, options.src]);
   });
 
-  gulp.task('serve:dist', ['build'], function () {
+  gulp.task('serve:dist', ['build'], () => {
     browserSyncInit(options.dist);
   });
 
-  gulp.task('serve:e2e', ['inject'], function () {
-    browserSyncInit([options.tmp + '/serve', options.src], []);
+  gulp.task('serve:e2e', ['inject'], () => {
+    browserSyncInit([`${options.tmp}/serve`, options.src], []);
   });
 
-  gulp.task('serve:e2e-dist', ['build'], function () {
+  gulp.task('serve:e2e-dist', ['build'], () => {
     browserSyncInit(options.dist, []);
   });
 };
