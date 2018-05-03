@@ -1,40 +1,38 @@
-'use strict';
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
 
-var gulp = require('gulp');
-var browserSync = require('browser-sync');
+const $ = require('gulp-load-plugins')();
 
-var $ = require('gulp-load-plugins')();
+import {stream as wiredep} from 'wiredep';
 
-var wiredep = require('wiredep').stream;
-
-module.exports = function(options) {
-  gulp.task('styles', function () {
-    var sassOptions = {
+export default options => {
+  gulp.task('styles', () => {
+    const sassOptions = {
       style: 'expanded'
     };
 
-    var injectFiles = gulp.src([
-      options.src + '/app/**/*.scss',
-      '!' + options.src + '/app/index.scss',
-      '!' + options.src + '/app/vendor.scss'
+    const injectFiles = gulp.src([
+      `${options.src}/app/**/*.scss`,
+      `!${options.src}/app/index.scss`,
+      `!${options.src}/app/vendor.scss`
     ], { read: false });
 
-    var injectOptions = {
-      transform: function(filePath) {
-        filePath = filePath.replace(options.src + '/app/', '');
-        return '@import \'' + filePath + '\';';
+    const injectOptions = {
+      transform(filePath) {
+        filePath = filePath.replace(`${options.src}/app/`, '');
+        return `@import '${filePath}';`;
       },
       starttag: '// injector',
       endtag: '// endinjector',
       addRootSlash: false
     };
 
-    var indexFilter = $.filter('index.scss');
-    var vendorFilter = $.filter('vendor.scss');
+    const indexFilter = $.filter('index.scss');
+    const vendorFilter = $.filter('vendor.scss');
 
     return gulp.src([
-      options.src + '/app/index.scss',
-      options.src + '/app/vendor.scss'
+      `${options.src}/app/index.scss`,
+      `${options.src}/app/vendor.scss`
     ])
       .pipe(indexFilter)
       .pipe($.inject(injectFiles, injectOptions))
@@ -46,7 +44,7 @@ module.exports = function(options) {
       .pipe($.sass(sassOptions)).on('error', options.errorHandler('Sass'))
       .pipe($.autoprefixer()).on('error', options.errorHandler('Autoprefixer'))
       .pipe($.sourcemaps.write())
-      .pipe(gulp.dest(options.tmp + '/serve/app/'))
-      .pipe(browserSync.reload({ stream: true }));
+      .pipe(gulp.dest(`${options.tmp}/serve/app/`))
+      .pipe(browserSync.reload({ stream: true }));
   });
 };
