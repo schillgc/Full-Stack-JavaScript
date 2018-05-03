@@ -13,21 +13,19 @@
 
 ***************/
 
-'use strict';
-
-var httpProxy = require('http-proxy');
-var chalk = require('chalk');
+import httpProxy from 'http-proxy';
+import chalk from 'chalk';
 
 /*
  * Location of your backend server
  */
-var proxyTarget = 'http://server/context/';
+const proxyTarget = 'http://server/context/';
 
-var proxy = httpProxy.createProxyServer({
+const proxy = httpProxy.createProxyServer({
   target: proxyTarget
 });
 
-proxy.on('error', function(error, req, res) {
+proxy.on('error', (error, req, res) => {
   res.writeHead(500, {
     'Content-Type': 'text/plain'
   });
@@ -62,6 +60,4 @@ function proxyMiddleware(req, res, next) {
  */
 
 //module.exports = [proxyMiddleware];
-module.exports = function() {
-  return [];
-};
+export default () => [];
