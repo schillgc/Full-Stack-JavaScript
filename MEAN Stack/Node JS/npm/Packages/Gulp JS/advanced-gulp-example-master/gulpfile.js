@@ -1,17 +1,15 @@
-'use strict';
+import gulp from 'gulp';
+import gutil from 'gulp-util';
+import wrench from 'wrench';
 
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var wrench = require('wrench');
-
-var options = {
+const options = {
   src: 'src',
   dist: 'production',
   tmp: '.tmp',
   e2e: 'e2e',
-  errorHandler: function(title) {
+  errorHandler(title) {
     return function(err) {
-      gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
+      gutil.log(gutil.colors.red(`[${title}]`), err.toString());
       this.emit('end');
     };
   },
@@ -21,12 +19,10 @@ var options = {
   }
 };
 
-wrench.readdirSyncRecursive('./gulp').filter(function(file) {
-  return (/\.(js|coffee)$/i).test(file);
-}).map(function(file) {
-  require('./gulp/' + file)(options);
+wrench.readdirSyncRecursive('./gulp').filter(file => (/\.(js|coffee)$/i).test(file)).map(file => {
+  require(`./gulp/${file}`)(options);
 });
 
-gulp.task('default', ['clean'], function () {
+gulp.task('default', ['clean'], () => {
     gulp.start('build');
 });
