@@ -1,41 +1,37 @@
-'use strict';
+import gulp from 'gulp';
 
-var gulp = require('gulp');
+const $ = require('gulp-load-plugins')();
 
-var $ = require('gulp-load-plugins')();
+import wiredep from 'wiredep';
+import karma from 'karma';
+import concat from 'concat-stream';
+import _ from 'lodash';
 
-var wiredep = require('wiredep');
-var karma = require('karma');
-var concat = require('concat-stream');
-var _ = require('lodash');
-
-module.exports = function(options) {
+export default options => {
   function listFiles(callback) {
-    var wiredepOptions = _.extend({}, options.wiredep, {
+    const wiredepOptions = _.extend({}, options.wiredep, {
       dependencies: true,
       devDependencies: true
     });
-    var bowerDeps = wiredep(wiredepOptions);
+    const bowerDeps = wiredep(wiredepOptions);
 
-    var specFiles = [
-      options.src + '/**/*.spec.js',
-      options.src + '/**/*.mock.js'
+    const specFiles = [
+      `${options.src}/**/*.spec.js`,
+      `${options.src}/**/*.mock.js`
     ];
 
-    var htmlFiles = [
-      options.src + '/**/*.html'
+    const htmlFiles = [
+      `${options.src}/**/*.html`
     ];
 
-    var srcFiles = [
-      options.tmp + '/serve/app/**/*.js'
-    ].concat(specFiles.map(function(file) {
-      return '!' + file;
-    }));
+    const srcFiles = [
+      `${options.tmp}/serve/app/**/*.js`
+    ].concat(specFiles.map(file => `!${file}`));
 
 
     gulp.src(srcFiles)
       .pipe($.angularFilesort()).on('error', options.errorHandler('AngularFilesort'))
-      .pipe(concat(function(files) {
+      .pipe(concat(files => {
         callback(bowerDeps.js
           .concat(_.pluck(files, 'path'))
           .concat(htmlFiles)
@@ -44,20 +40,20 @@ module.exports = function(options) {
   }
 
   function runTests (singleRun, done) {
-    listFiles(function(files) {
+    listFiles(files => {
       karma.server.start({
-        configFile: __dirname + '/../karma.conf.js',
-        files: files,
-        singleRun: singleRun,
+        configFile: `${__dirname}/../karma.conf.js`,
+        files,
+        singleRun,
         autoWatch: !singleRun
       }, done);
     });
   }
 
-  gulp.task('test', ['scripts'], function(done) {
+  gulp.task('test', ['scripts'], done => {
     runTests(true, done);
   });
-  gulp.task('test:auto', ['watch'], function(done) {
+  gulp.task('test:auto', ['watch'], done => {
     runTests(false, done);
   });
 };
