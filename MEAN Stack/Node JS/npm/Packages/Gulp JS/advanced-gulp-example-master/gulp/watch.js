@@ -1,21 +1,19 @@
-'use strict';
-
-var gulp = require('gulp');
-var browserSync = require('browser-sync');
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
 
 function isOnlyChange(event) {
   return event.type === 'changed';
 }
 
-module.exports = function(options) {
-  gulp.task('watch', ['markups', 'inject'], function () {
+export default options => {
+  gulp.task('watch', ['markups', 'inject'], () => {
 
-    gulp.watch([options.src + '/*.html', 'bower.json'], ['inject']);
+    gulp.watch([`${options.src}/*.html`, 'bower.json'], ['inject']);
 
     gulp.watch([
-      options.src + '/app/**/*.css',
-      options.src + '/app/**/*.scss'
-    ], function(event) {
+      `${options.src}/app/**/*.css`,
+      `${options.src}/app/**/*.scss`
+    ], event => {
       if(isOnlyChange(event)) {
         gulp.start('styles');
       } else {
@@ -24,9 +22,9 @@ module.exports = function(options) {
     });
 
     gulp.watch([
-      options.src + '/app/**/*.js',
-      options.src + '/app/**/*.coffee'
-    ], function(event) {
+      `${options.src}/app/**/*.js`,
+      `${options.src}/app/**/*.coffee`
+    ], event => {
       if(isOnlyChange(event)) {
         gulp.start('scripts');
       } else {
@@ -34,9 +32,9 @@ module.exports = function(options) {
       }
     });
 
-    gulp.watch(options.src + '/app/**/*.jade', ['markups']);
+    gulp.watch(`${options.src}/app/**/*.jade`, ['markups']);
 
-    gulp.watch(options.src + '/app/**/*.html', function(event) {
+    gulp.watch(`${options.src}/app/**/*.html`, event => {
       browserSync.reload(event.path);
     });
   });
