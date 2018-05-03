@@ -1,60 +1,50 @@
-"use strict";
+import gulp from 'gulp';
+import concat from 'gulp-concat';
+import uglify from 'gulp-uglify';
+import rename from 'gulp-rename';
+import sass from 'gulp-sass';
+import maps from 'gulp-sourcemaps';
+import del from 'del';
+import connect from 'gulp-connect';
 
-var gulp = require('gulp'),
-  concat = require('gulp-concat'),
-  uglify = require('gulp-uglify'),
-  rename = require('gulp-rename'),
-    sass = require('gulp-sass'),
-    maps = require('gulp-sourcemaps'),
-     del = require('del'),
- connect = require('gulp-connect');
+gulp.task("concatScripts", () => gulp.src([
+    'js/jquery.js',
+    'js/sticky/jquery.sticky.js',
+    'js/main.js'
+    ])
+.pipe(maps.init())
+.pipe(concat('app.js'))
+.pipe(maps.write('./'))
+.pipe(gulp.dest('js')));
 
-gulp.task("concatScripts", function() {
-    return gulp.src([
-        'js/jquery.js',
-        'js/sticky/jquery.sticky.js',
-        'js/main.js'
-        ])
+gulp.task("minifyScripts", ["concatScripts"], () => gulp.src('js/app.js')
+    .pipe(uglify())
+    .pipe(rename('app.min.js'))
+    .pipe(gulp.dest('js')));
+
+gulp.task("compileSass", () => gulp.src("scss/application.scss")
     .pipe(maps.init())
-    .pipe(concat('app.js'))
+    .pipe(sass())
     .pipe(maps.write('./'))
-    .pipe(gulp.dest('js'));
-});
+    .pipe(gulp.dest('css')));
 
-gulp.task("minifyScripts", ["concatScripts"], function() {
-    return gulp.src('js/app.js')
-        .pipe(uglify())
-        .pipe(rename('app.min.js'))
-        .pipe(gulp.dest('js'));
-});
-
-gulp.task("compileSass", function() {
-    return gulp.src("scss/application.scss")
-        .pipe(maps.init())
-        .pipe(sass())
-        .pipe(maps.write('./'))
-        .pipe(gulp.dest('css'));
-});
-
-gulp.task("watchFiles", function() {
+gulp.task("watchFiles", () => {
     gulp.watch('scss/**/*.scss', ['compileSass']);
     gulp.watch('js/main.js', ['concatScripts']);
 });
 
-gulp.task("clean", function() {
+gulp.task("clean", () => {
     del(['dist', 'css/application.css*', 'js/app*.js*']);
 });
 
-gulp.task("build", ['minifyScripts', 'compileSass'], function() {
-    return gulp.src(['css/application.css', 'js/app.min.js', 'index.html',
-                     'img/**', 'fonts/**'], { base: './'} )
-                .pipe(gulp.dest('dist'));
-});
+gulp.task("build", ['minifyScripts', 'compileSass'], () => gulp.src(['css/application.css', 'js/app.min.js', 'index.html',
+                 'img/**', 'fonts/**'], { base: './'} )
+            .pipe(gulp.dest('dist')));
 
-gulp.task("serve", ['watchFiles'], function(){
+gulp.task("serve", ['watchFiles'], () => {
     connect.server({port: 3000});
 });
 
-gulp.task("default", ['clean'], function() {
+gulp.task("default", ['clean'], () => {
     gulp.start('build');
 });
