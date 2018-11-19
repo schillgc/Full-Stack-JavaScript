@@ -1,36 +1,26 @@
-/*
-* index html
-*
-* Copyright (c) 2016 Gavin Schilling Marketing
-* Licensed under the GNU Affero General Public License
-* 
-*/
-
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Treetunes</title>
-    <link rel="stylesheet" href="style.css"/>
-</head>
+    <head lang="en-us">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Tunes</title>
+        <link rel="stylesheet" href="style.css"/>
+    </head>
 
-<body>
+    <body>
+        <div id="player">
+            <h1>Tunes</h1>
+            <ol id="playlist"></ol id="playlist">
 
-    <div>
-        <h1>Treetunes</h1>
+            <button id="play">Play</button>
+            <button id="next">Next</button>
+            <button id="stop">Stop</button>
+        </div id="player">
 
-        <ol id="playlist">
-        </ol>
-        <button id="play">Play</button>
-        <button id="next">Next</button>
-        <button id="stop">Stop</button>
-
-    </div>
-
-    <script src="playlist.js"></script>
-    <script src="media.js"></script>
-    <script src="song.js"></script>
-    <script src="app.js"></script>
-
-</body>
-
+        <script src="playlist.js"></script>
+        <script src="media.js"></script>
+        <script src="song.js"></script>
+        <script src="app.js"></script>
+    </body>
 </html>

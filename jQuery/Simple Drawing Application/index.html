@@ -1,48 +1,45 @@
-/*
-* index html
-*
-* Copyright (c) 2016 Gavin Schilling Marketing
-* Licensed under the GNU Affero General Public License
-* 
-*/
-
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Simple Drawing Application</title>
-	<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
-</head>
-<body>
-	<canvas	width="600" height="400"></canvas>
-	<div class="controls">
-		<ul>
-			<li class="red selected"></li>
-			<li class="blue"></li>
-			<li class="yellow"></li>
-		</ul>
-		<button id="revealColorSelect">New Color</button>
-		<div id="colorSelect">
-			<span id="newColor"></span>
-			<div class="sliders">
-				<p>
-					<label for="red">Red</label>
-					<input id="red" name="red" type="range" min=0 max=255 value=0>
-				</p>
-				<p>
-					<label for="green">Green</label>
-					<input id="green" name="green" type="range" min=0 max=255 value=0>
-				</p>
-				<p>
-					<label for="blue">Blue</label>
-					<input id="blue" name="blue" type="range" min=0 max=255 value=0>
-				</p>
-			</div>
-			<div>
-			<button id="addNewColor">Add Color</button>
-			</div>
-		</div>
-	</div>
-	<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-	<script src="js/app.js" type="text/javascript" charset="utf-8"></script>	
-</body>
+    <head lang="en-us">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Simple Drawing Application</title>
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    </head>
+
+	<body>
+		<canvas	width="600" height="400"></canvas>
+		<div class="controls">
+			<ul>
+				<li class="red selected"></li>
+				<li class="blue"></li>
+				<li class="yellow"></li>
+			</ul>
+			<button id="revealColorSelect">New Color</button>
+			<div id="colorSelect">
+				<span id="newColor"></span>
+				<div class="sliders">
+					<p>
+						<label for="red">Red</label>
+						<input id="red" name="red" type="range" min=0 max=255 value=0>
+					</p>
+					<p>
+						<label for="green">Green</label>
+						<input id="green" name="green" type="range" min=0 max=255 value=0>
+					</p>
+					<p>
+						<label for="blue">Blue</label>
+						<input id="blue" name="blue" type="range" min=0 max=255 value=0>
+					</p>
+				</div class="sliders">
+				<div>
+					<button id="addNewColor">Add Color</button>
+				</div>
+			</div id="colorSelect">
+		</div id="controls">
+
+		<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>	
+	</body>
 </html>
