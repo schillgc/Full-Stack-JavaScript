@@ -21,7 +21,7 @@
     "angular": "^1.7.9",
     "body-parser": "1.18.2",
     "express": "4.16.0",
-    "mongoose": "^5.8.6"
+    "mongoose": "^5.12.2"
   },
   "devDependencies": {
     "mongod": "^2.0.0",
